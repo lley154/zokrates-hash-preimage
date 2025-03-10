@@ -100,30 +100,25 @@ Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 14.98ms (14.26ms CP
 Ran 2 test suites in 16.89ms (24.66ms CPU time): 3 tests passed, 0 failed, 0 skipped (3 total tests)
 ```
 ### Integration Testing
-Create a deployment script ~/zokrates/hash/zk-verifier/scripts/Verifier.s.sol
+Create a deployment script ~/zokrates/hash/zk-verifier/scripts/DeployVerifier.s.sol
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "forge-std/Script.sol";
-import "../src/Verifier.sol";
+import {Script} from "forge-std/Script.sol";
+import {Verifier} from "../src/Verifier.sol";
 
-contract VerifierScript is Script {
-    function run() external {
-        // Use the first test private key from Anvil
-        uint256 deployerPrivateKey = 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
-        
-        vm.startBroadcast(deployerPrivateKey);
-        
+contract DeployVerifier is Script {
+    function run() external returns (Verifier) {
+        vm.startBroadcast();
         Verifier verifier = new Verifier();
-        console.log("Verifier deployed to:", address(verifier));
-        
         vm.stopBroadcast();
+        return verifier;
     }
-}
+} 
 ```
 
-Now create the script to create a proof and verify it ~/zokrates/hash/zk-verifier/scripts/VerifierProof.s.sol
+Now create the verifier script ```~/zokrates/hash/zk-verifier/scripts/VerifierProof.s.sol```
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -155,7 +150,7 @@ contract VerifyProof is Script {
                 0x0ba1512fa348d0e0732f8c0b31884628fc2cfc5b3d0caf38ac9f82beaa3bb0a2,
                 0x2a58e67ccb61bc6070061713109e50b31cc279a8e45d2455ba94d895810d5ffc
             )
-        })
+        });
 
         vm.startBroadcast();
         bool result = verifier.verifyTx(proof);
@@ -166,14 +161,52 @@ contract VerifyProof is Script {
 } 
 ```
 
-#### Deploy the testing script
+#### Deploy the contract
 ```
 # In another terminal:
 # Deploy
 $ forge script script/DeployVerifier.s.sol:DeployVerifier --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
+[⠊] Compiling...
+No files changed, compilation skipped
+Script ran successfully.
+
+== Return ==
+0: contract Verifier 0x5FbDB2315678afecb367f032d93F642f64180aa3
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 31337
+
+Estimated gas price: 2.000000001 gwei
+
+Estimated total gas used for script: 1391588
+
+Estimated amount required: 0.002783176001391588 ETH
+
+==========================
+
+##### anvil-hardhat
+✅  [Success] Hash: 0xd0ed0b0bc3ac4302127d23295ddb6fd5dc37bd53efc1502aa3c3d06145c52d25
+Contract Address: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+Block: 1
+Paid: 0.001070453001070453 ETH (1070453 gas * 1.000000001 gwei)
+
+✅ Sequence #1 on anvil-hardhat | Total Paid: 0.001070453001070453 ETH (1070453 gas * avg 1.000000001 gwei)
+                                                                                               
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /workspace/hash/zk-verifier/broadcast/DeployVerifier.s.sol/31337/run-latest.json
+
+Sensitive values saved to: /workspace/hash/zk-verifier/cache/DeployVerifier.s.sol/31337/run-latest.json
+
 ```
 
-#### Execute and verify (replace <DEPLOYED_CONTRACT_ADDRESS> with the address from deployment
+#### Execute and verify (set the VERIFIER_ADDRESS to Contract Address from deployment)
 ```
 $ export VERIFIER_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
 $ forge script script/VerifyProof.s.sol:VerifyProof --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
