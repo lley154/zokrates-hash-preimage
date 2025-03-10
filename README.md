@@ -219,5 +219,5 @@ Compiler run successful!
 Script ran successfully.
 ```
 
-Change one of the Pairing Points to ```0x00d6f17b9eb558d2e8b8d3a653ded8edaf5d2314224509447600eb71ae76e6cb``` and execute again ```VerifyProof.s.sol``` and see what happens.
+Change one of the Pairing Points to ```0x00d6f17b9eb558d2e8b8d3a653ded8edaf5d2314224509447600eb71ae76e6cb``` in  ```VerifyProof.s.sol``` and excute again to see what happens.
 
