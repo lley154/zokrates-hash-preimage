@@ -74,6 +74,7 @@ contract VerifierTest is Test {
     }
 }
 ```
+Replace the Pairing Points with updated values that can be found in the ```~/zokrates/proof.json```
 
 Now copy the generated solidity file to the source forges ```src``` directory
 ```
@@ -160,6 +161,7 @@ contract VerifyProof is Script {
     }
 } 
 ```
+Replace the Pairing Points with updated values that can be found in the ```~/zokrates/proof.json```
 
 #### Deploy the contract
 ```
