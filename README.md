@@ -16,10 +16,7 @@ Complete all of the steps in the following example https://zokrates.github.io/ex
 
 Open a new terminal window
 ```
-$ docker network create forge-network
-$ cd ~/zokrates
-$ pwd
-$ docker run -it -v /path-to-zokrates-directory/zokrates:/workspace --network forge-network --name docker-anvil ghcr.io/foundry-rs/foundry:stable bash
+$ docker run -it -v /path-to-zokrates-directory/zokrates:/workspace --name docker-forge ghcr.io/foundry-rs/foundry:stable bash
 $ anvil
 ```
 
@@ -27,8 +24,8 @@ Open another new terminal window
 ```
 $ cd ~/zokrates
 $ pwd
-$ docker run -it -v /path-to-zokrates-directory/zokrates:/workspace --network forge-network --name docker-forge ghcr.io/foundry-rs/foundry:stable bash
-$ cd /workspaces/hash
+$ docker exec -it docker-forge bash
+$ cd /workspace/hash
 $ git config --global user.email your@email.com
 $ git config --global user.name your.name
 $ forge init zk-verifier
@@ -81,7 +78,7 @@ Now copy the generated solidity file to the source forges ```src``` directory
 cp ~/zokrates/hash/verifier.sol ~/zokrates/hash/zk-verifier/src/Verifier.sol
 ```
 
-Now test that the verifier fails when presented the wrong (dummy) proof.
+Inside the forger container, test that the verifier fails when presented the wrong (dummy) proof.
 ```
 $ forge test -vv
 [⠊] Compiling...
@@ -100,8 +97,6 @@ Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 22.50ms (22.07ms CP
 
 Ran 2 test suites in 23.86ms (42.97ms CPU time): 3 tests passed, 0 failed, 0 skipped (3 total tests)
 ```
-
-
 
 Create a deployment script ~/zokrates/hash/zk-verifier/scripts/Verifier.s.sol
 ```
@@ -126,12 +121,12 @@ contract VerifierScript is Script {
 }
 ```
 
-Deploy to local network
+Inside the forge container, deploy the verifier script to local network
 ```
 # Deploy using Anvil's RPC URL
 forge script script/Verifier.s.sol:VerifierScript \
-    --rpc-url http://docker-anvil:8545 \
-    --broadcast
+--rpc-url http://docker-anvil:8545 \
+--broadcast
 ```
 
 
