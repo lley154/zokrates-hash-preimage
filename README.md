@@ -101,7 +101,7 @@ Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 14.98ms (14.26ms CP
 Ran 2 test suites in 16.89ms (24.66ms CPU time): 3 tests passed, 0 failed, 0 skipped (3 total tests)
 ```
 ### Integration Testing
-Create a deployment script ```~/zokrates/hash/zk-verifier/scripts/DeployVerifier.s.sol```
+Create a deployment script ```~/zokrates/hash/zk-verifier/script/DeployVerifier.s.sol```
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -119,7 +119,7 @@ contract DeployVerifier is Script {
 } 
 ```
 
-Now create the verifier script ```~/zokrates/hash/zk-verifier/scripts/VerifyProof.s.sol```
+Now create the verifier script ```~/zokrates/hash/zk-verifier/script/VerifyProof.s.sol```
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
