@@ -70,7 +70,7 @@ contract VerifierTest is Test {
         });
 
         bool result = verifier.verifyTx(proof);
-        assertFalse(result, "Proof verification failed");
+        assertTrue(result, "Proof verification failed");
     }
 }
 ```
@@ -118,7 +118,7 @@ contract DeployVerifier is Script {
 } 
 ```
 
-Now create the verifier script ```~/zokrates/hash/zk-verifier/scripts/VerifierProof.s.sol```
+Now create the verifier script ```~/zokrates/hash/zk-verifier/scripts/VerifyProof.s.sol```
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
