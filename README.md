@@ -35,7 +35,7 @@ $ cd zk-verifier
 ```
 
 ### Unit Testing
-Open a new terminal window and create a test file in ~/zokrates/hash/zk-verifier/test/Verifier.t.sol
+Open a new terminal window and create a test file in ```~/zokrates/hash/zk-verifier/test/Verifier.t.sol```
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
