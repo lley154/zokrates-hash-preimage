@@ -1,5 +1,5 @@
 # Zokrates Hash Preimage
-The goal is to compute the hash for the number 5 and then prove they know the preimage number 5 but doesn't have to reveal it.
+The goal is to compute the hash for the number 5 and then prove a user knows the preimage number 5 but doesn't have to reveal it.
 
 ### Setup
 Open a terminal window
