@@ -165,8 +165,6 @@ Replace the Pairing Points with updated values that can be found in the ```~/zok
 
 #### Deploy the contract
 ```
-# In another terminal:
-# Deploy
 $ forge script script/DeployVerifier.s.sol:DeployVerifier --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
 [⠊] Compiling...
 No files changed, compilation skipped
