@@ -161,7 +161,7 @@ contract VerifyProof is Script {
     }
 } 
 ```
-Replace the Pairing Points with updated values that can be found in the ```~/zokrates/proof.json```
+Replace the Pairing Points with updated values that can be found in the ```~/zokrates/hash/proof.json```
 
 #### Deploy the contract
 ```
